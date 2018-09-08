@@ -20,6 +20,7 @@ spring:
         #healthCheckUrl: http://localhost:8080/app/management
         healthCheckPath: /app/management/health
         healthCheckInterval: 15s
+        tags: color=bue
 
 #logging.level.org.springframework.web: DEBUG
 #logging.level.org.hibernate: ERROR

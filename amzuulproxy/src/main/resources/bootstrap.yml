@@ -1,0 +1,18 @@
+---
+spring:
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      config:
+        enabled: true
+        format: yaml
+        prefix: config
+        data-key: keys
+        defaultContext: apps
+        profileSeparator: '::'
+      discovery:
+        healthCheckPath: ${management.endpoints.web.base-path}/health
+        healthCheckInterval: 15s
+        prefer-ip-address: true
+        instanceId: ${spring.application.name}:${random.value}

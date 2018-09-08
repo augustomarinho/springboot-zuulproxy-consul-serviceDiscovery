@@ -15,16 +15,7 @@ management:
 #hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds: 120000
 
 spring.application.name: APIGateway
-spring:
-  cloud:
-    consul:
-      host: localhost
-      port: 8500
-      discovery:
-        healthCheckPath: ${management.endpoints.web.base-path}/health
-        healthCheckInterval: 15s
-        prefer-ip-address: true
-        instanceId: ${spring.application.name}:${random.value}
+
 
 ribbon:
   ReadTimeout: 130000
@@ -32,7 +23,6 @@ ribbon:
   ServerListRefreshInterval: 2000
   eureka.enabled: false
   consul.enabled: true
-
 
 zuul:
   routes:
