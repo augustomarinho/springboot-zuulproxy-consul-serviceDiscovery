@@ -1,0 +1,25 @@
+---
+spring.application.name: RestService
+
+server:
+  port: 8080
+  servlet:
+    contextPath: /app
+
+management:
+  endpoints:
+    web:
+      base-path: /management
+      exposure:
+        include: info,health
+
+spring:
+  cloud:
+    consul:
+      discovery:
+        #healthCheckUrl: http://localhost:8080/app/management
+        healthCheckPath: /app/management/health
+        healthCheckInterval: 15s
+
+#logging.level.org.springframework.web: DEBUG
+#logging.level.org.hibernate: ERROR

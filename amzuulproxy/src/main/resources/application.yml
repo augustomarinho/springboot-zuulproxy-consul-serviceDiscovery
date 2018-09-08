@@ -1,0 +1,46 @@
+---
+server:
+  port: 9000
+
+management:
+  port: 8085
+  add-application-context-header: true
+  endpoints:
+    web:
+      base-path: /management
+      exposure:
+        include: info,health
+
+
+#hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds: 120000
+
+spring.application.name: APIGateway
+spring:
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      discovery:
+        healthCheckPath: ${management.endpoints.web.base-path}/health
+        healthCheckInterval: 15s
+        prefer-ip-address: true
+        instanceId: ${spring.application.name}:${random.value}
+
+ribbon:
+  ReadTimeout: 130000
+  ConnectTimeout: 130000
+  ServerListRefreshInterval: 2000
+  eureka.enabled: false
+  consul.enabled: true
+
+
+zuul:
+  routes:
+    app:
+      path: /app/**
+      serviceId: RestService
+      strip-prefix: false
+    #RestService:
+    #  path: /RestService/**
+    #  serviceId: RestService
+    #  strip-prefix: true
