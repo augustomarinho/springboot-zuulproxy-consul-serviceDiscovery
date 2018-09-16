@@ -26,11 +26,22 @@ ribbon:
 
 zuul:
   routes:
-    app:
+   app:
       path: /app/**
-      serviceId: RestService
+      serviceId: RestService-blue
       strip-prefix: false
     #RestService:
     #  path: /RestService/**
     #  serviceId: RestService
     #  strip-prefix: true
+
+weight.color.filter:
+  enabled: true
+  order: 1
+  rules:
+    - regexPath: ^\/app.*
+      weights:
+        - serviceId: RestService-blue
+          weight: 100
+        - serviceId: RestService-green
+          weight: 0

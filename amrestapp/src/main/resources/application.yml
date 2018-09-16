@@ -1,5 +1,7 @@
 ---
-spring.application.name: RestService
+spring.application.name: RestService-${app.color}
+
+app.color: blue
 
 server:
   port: 8080
