@@ -10,3 +10,7 @@ Project created for studying the follow requirements:
     ```sh
         docker run -d --net=host --name=dev-consul consul:latest
     ```
+
+# How to configure manually Key-value in Consul Web Console
+
+![Consul KV Config](https://github.com/augustomarinho/springboot-zuulproxy-consul-serviceDiscovery/blob/master/amzuulproxy/docs/Consul-KV.png)
