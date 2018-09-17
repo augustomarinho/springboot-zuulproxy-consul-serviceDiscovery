@@ -43,14 +43,15 @@ public class WeightRouteFilter extends ZuulFilter {
         logger.debug("Starting balancing list for WeightRule {} ", weightRule);
 
         TreeMap colorPool = new TreeMap<Integer, ServiceWeight>();
+        AtomicInteger totalWeight = new AtomicInteger(0);
 
         for (ServiceWeight s : weightRule.getWeights()) {
-            AtomicInteger totalWeight = new AtomicInteger(0);
             logger.trace("adding weight color {} for weight rule {}", s, weightRule);
             totalWeight.getAndAdd(s.getWeight());
             colorPool.put(totalWeight.get(), s);
         }
 
+        this.poolMap.remove(weightRule);
         this.poolMap.put(weightRule, colorPool);
     }
 
@@ -66,9 +67,9 @@ public class WeightRouteFilter extends ZuulFilter {
         Random someRandGen = new Random();
         int rnd = someRandGen.nextInt(weightRule.totalWeight()) + 1;
 
-        if (!existBalanceRule(weightRule)) {
-            startBalancing(weightRule);
-        }
+        //if (!existBalanceRule(weightRule)) {
+        startBalancing(weightRule);
+        //}
 
         ServiceWeight sorted = poolMap.get(weightRule).ceilingEntry(rnd).getValue();
         incrementStatistics(weightRule, sorted);

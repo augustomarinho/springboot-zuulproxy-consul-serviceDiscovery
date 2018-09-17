@@ -33,8 +33,8 @@ public class Weight {
     public static void main(String[] args) {
         Weight weight = new Weight();
 
-        ServiceWeight blueColor = new ServiceWeight("blue", 0);
-        ServiceWeight greenColor = new ServiceWeight("green", 100);
+        ServiceWeight blueColor = new ServiceWeight("blue", 50);
+        ServiceWeight greenColor = new ServiceWeight("green", 50);
 
         Map<ServiceWeight, Integer> invokes = new ConcurrentHashMap<ServiceWeight, Integer>();
         invokes.put(blueColor, 0);
@@ -42,8 +42,8 @@ public class Weight {
 
         weight.startBalancing(blueColor, greenColor);
 
-        for (int i = 0; i < 100000; i++) {
-            int rnd = weight.someRandGen.nextInt(weight.totalWeight.get()) + 1;
+        for (int i = 0; i < 1000000; i++) {
+            int rnd = weight.someRandGen.nextInt(weight.totalWeight.get()-1) + 1;
 
             increment(invokes, weight.colorPool.ceilingEntry(rnd).getValue());
             //System.out.println(weight.colorPool.ceilingEntry(rnd).getValue());
