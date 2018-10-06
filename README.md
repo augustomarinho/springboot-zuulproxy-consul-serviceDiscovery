@@ -6,10 +6,20 @@ Project created for studying the follow requirements:
 
 # Initial Setup
 
-  - Run Consul inside Docker :
+  - Run Consul inside Docker (For Development) :
     ```sh
         docker run -d --net=host --name=dev-consul consul:latest
     ```
+
+  - Run Consul in Server Mode (For Development):
+      ```sh
+          docker run -d --name=dev-consul --net=host -e 'CONSUL_LOCAL_CONFIG={"skip_leave_on_interrupt": true}' consul agent -server -bind=<external ip> -retry-join=<root agent ip> -bootstrap-expect=<number of server agents> -ui
+      ```
+
+  - Run Consul in Client Mode (For Development using consult server together):
+      ```sh
+        docker run -d --name=dev-consul-client --net=host -e 'CONSUL_LOCAL_CONFIG={"leave_on_terminate": true}' consul agent -bind=<external ip> -retry-join=<root agent ip>
+      ```
 
 # Run Configurations to simulate Blue/Green env for RestServiceDiscoveryApp
 Blue (Default in application.yml)
@@ -26,4 +36,3 @@ Green
 # How to configure manually Key-value in Consul Web Console
 
 ![Consul KV Config](https://github.com/augustomarinho/springboot-zuulproxy-consul-serviceDiscovery/blob/master/amzuulproxy/docs/Consul-KV.png)
-s
